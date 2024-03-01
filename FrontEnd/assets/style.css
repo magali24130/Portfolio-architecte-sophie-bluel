@@ -56,6 +56,8 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
+
 }
 header {
 	display: flex;
@@ -72,14 +74,14 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
+
 }
 
 h2{
@@ -102,6 +104,69 @@ nav ul {
 a{
 	text-decoration: none;
 	color:black;
+	margin-left: 42%;
+
+}
+
+div.button1 {
+	border: 2px solid #1D6154;
+    text-align: center;
+    border-radius: 60px;
+    transition: all 0.5s ease;
+    height: 37px;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    width: 15%;
+}
+div.button2{
+	border: 2px solid #1D6154;
+    text-align: center;
+    border-radius: 60px;
+    transition: all 0.5s ease;
+    height: 37px;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    width: 15%;
+}
+div.button3{
+	border: 2px solid #1D6154;
+    text-align: center;
+    border-radius: 60px;
+    transition: all 0.5s ease;
+    height: 37px;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    width: 20%;
+}
+div.button4{
+	border: 2px solid #1D6154;
+    text-align: center;
+    border-radius: 60px;
+    transition: all 0.5s ease;
+    height: 37px;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    width: 20%;
+}
+.button-list{
+	display: flex;
+	justify-content: center;
+    column-gap: 10px;
+    font-family: "Syne";
+    font-weight: 700;
+    color: #1D6154;
+    border-radius: 60px;
+    transition: all 0.5s ease;
+    margin-bottom: 5%;
+}
+
+i {
+	color:#1D6154;
+	
 
 }
 nav li {
@@ -121,6 +186,7 @@ li:hover {
 	flex-direction: column;
 	margin-top: 20px;
 	width: 35%;
+	margin-left: 30%;
   }
   
   .login__form input {
@@ -128,6 +194,7 @@ li:hover {
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	width: 379px;
   }
   
   .login__form label {
@@ -144,11 +211,13 @@ li:hover {
 	color: white;
 	background-color: #1D6154;
 	border: 2px solid #1D6154;
-	margin: 3em auto;
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
 	transition: all 0.5s ease;
+	margin-left: 30%;
+    margin-top: 10%;
+    margin-bottom: 5%;
   }
 p{
 	display: flex;
@@ -237,10 +306,9 @@ input[type="submit"]{
 	text-align: center;
 	border-radius: 60px ;
 }
-
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
