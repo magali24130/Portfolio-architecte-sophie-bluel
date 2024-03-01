@@ -38,14 +38,14 @@ function login(id) {
     // véeification de l'email
     if (!id.email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/g)) {
         const p = document.createElement("p");
-        p.innerHTML = "Veuillez entrer une addresse mail valide";
+        p.innerHTML = "Veuillez saisir une addresse mail valide";
         loginEmailError.appendChild(p);
         return;
     }
     // vérifcation du mot de passe
     if (id.password.length < 5 && !id.password.match(/^[a-zA-Z0-9]+$/g)) {
         const p = document.createElement("p");
-        p.innerHTML = "Veuillez entrer un mot de passe valide";
+        p.innerHTML = "Veuillez saisir un mot de passe valide";
         loginMdpError.appendChild(p);
         return;
     }
@@ -65,7 +65,7 @@ function login(id) {
         // Si couple email/mdp incorrect
         if (result.error || result.message) {
             const p = document.createElement("p");
-            p.innerHTML = "La combinaison e-mail/mot de passe est incorrecte";
+            p.innerHTML = "La combinaison de l'adresse e-mail et du mot de passe n'est pas valide";
             loginMdpError.appendChild(p);
 
         // Si couple email/mdp correct
