@@ -45,7 +45,7 @@ async function generationProjets(data, id) {
     if (data.length === 0 || data === undefined) { 
         const p = document.createElement("p");
         p.classList.add("error");
-        p.innerHTML = "Aucun projet à afficher actuellement <br><br>Toutes nos excuses pour la gêne occasionnée";
+        p.innerHTML = "Aucun projet à afficher actuellement ";
         sectionProjets.appendChild(p);
         return;}
 
