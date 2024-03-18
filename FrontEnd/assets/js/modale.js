@@ -188,7 +188,6 @@ window.addEventListener("keydown", function(e) {
 
 // Récupération du token
 const token = localStorage.getItem("token");
-const AlredyLogged = document.querySelector(".js-alredy-logged");
 
 adminPanel()
 // Gestion de l'affichage des boutons admin
@@ -200,7 +199,6 @@ function adminPanel() {
         else {
             a.removeAttribute("aria-hidden")
             a.removeAttribute("style")
-            AlredyLogged.innerHTML = "deconnexion";
         }
     });
 }
