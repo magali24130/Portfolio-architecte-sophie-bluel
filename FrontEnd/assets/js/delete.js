@@ -41,4 +41,4 @@ async function refreshPage(i) {
 modaleProjets(); // Re lance une génération des projets dans la modale admin
 }
 
-export {deleteWork, deleteProjets, refreshPage};
+

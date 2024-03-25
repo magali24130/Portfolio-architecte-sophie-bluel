@@ -59,10 +59,7 @@ const backToModale = function (e) {
 const stopPropagation = function (e) {
   e.stopPropagation();
   };
-  // Selectionne les éléments qui ouvrent la modale
-  document.querySelectorAll(".js-modale").forEach((a) => {
-  a.addEventListener("click", openModale);
-  });
+  
   // Ferme la modale avec la touche echap
   window.addEventListener("keydown", function (e) {
   if (e.key === "Escape" || e.key === "Esc") {
@@ -141,24 +138,9 @@ const openModale = function (e) {
     .addEventListener("click", stopPropagation);
 };
 
- // Génère les projets
-  if (id === null || ["0", "1", "2", "3"].includes(id)) {
-    for (let i = 0; i < data.length; i++) {
-      const figure = document.createElement("figure");
-      sectionProjets.appendChild(figure);
-      figure.classList.add(`js-projet-${data[i].id}`); // Ajoute l'id du projet pour le lien vers la modale lors de la supression
-      const img = document.createElement("img");
-      img.src = data[i].imageUrl;
-      img.alt = data[i].title;
-      figure.appendChild(img);
+ 
+// Selectionne les éléments qui ouvrent la modale
+document.querySelectorAll(".js-modale").forEach((a) => {
+  a.addEventListener("click", openModale);
+  });
 
-      const figcaption = document.createElement("figcaption");
-      figcaption.innerHTML = data[i].title;
-      figure.appendChild(figcaption);
-    }
-  }
-// supprime le projet de la page d'accueil
-const projet = document.querySelector(`.js-projet-${i}`);
-projet.style.display = "none";
-
-export { resetmodaleSectionProjets, openModale, closeModale, openModaleProjet};

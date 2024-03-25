@@ -1,4 +1,4 @@
-export const callCategory = async () => {
+const callCategory = async () => {
     try {
         const response = await fetch("http://localhost:5678/api/categories")
         const categories = await response.json()
@@ -9,8 +9,7 @@ export const callCategory = async () => {
     }
 }
 
-
-export const callWorks = async () => {
+const callWorks = async () => {
     try {
         const response = await fetch("http://localhost:5678/api/works")
         const works = await response.json()

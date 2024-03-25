@@ -14,7 +14,6 @@ if (data.length === 0 || data === undefined) {
   p.classList.add("error");
   p.innerHTML = "Aucun projet à afficher actuellement ";
   sectionProjets.appendChild(p);
-  return;
 }
 
 // appliquer les filtres lors du clic sur un bouton filtre
@@ -33,4 +32,3 @@ for (let filter of listfilter) {
   }
 }
 
-export {filterProjects, applyFilters};

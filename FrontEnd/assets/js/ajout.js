@@ -49,4 +49,3 @@ async function addWork(event) {
   }
 }
 
-export {btnAjouterProjet, addWork};
