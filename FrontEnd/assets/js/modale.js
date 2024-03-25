@@ -1,123 +1,3 @@
-// >>> GENERATION DES PROJETS
-const listfilter = document.querySelectorAll(".filter");
-const btnAll = document.querySelector(".btn1");
-const btnId1 = document.querySelector(".btn2");
-const btnId2 = document.querySelector(".btn3");
-const btnId3 = document.querySelector(".btn4");
-
-const sectionProjets = document.querySelector(".gallery");
-
-let data = 1;
-let id;
-generationProjets(data, 1);
-
-// Reset la section projets
-function resetSectionProjets() {
-  sectionProjets.innerHTML = "";
-}
-
-// Génère les projets
-async function generationProjets(data, id) {
-  try {
-    const response = await fetch("http://localhost:5678/api/works");
-    data = await response.json();
-  } catch {
-    const p = document.createElement("p");
-    p.classList.add("error");
-    p.innerHTML =
-      "Une erreur est survenue lors de la récupération des projets<br><br>Une tentative de reconnexion automatique auras lieu dans une minute<br><br><br><br>Si le problème persiste, veuillez contacter l'administrateur du site";
-    sectionProjets.appendChild(p);
-    await new Promise((resolve) => setTimeout(resolve, 60000));
-    window.location.href = "index.html";
-  }
-
-  resetSectionProjets();
-
-  // Filtre les résultats
-  if (id == "0") {
-  } else if (["1", "2", "3"].includes(id)) {
-    data = data.filter((data) => data.categoryId == id);
-  }
-
-  // Change la couleur du bouton en fonction du filtre
-  
-  if (data.length === 0 || data === undefined) {
-    const p = document.createElement("p");
-    p.classList.add("error");
-    p.innerHTML = "Aucun projet à afficher actuellement ";
-    sectionProjets.appendChild(p);
-    return;
-  }
-
-  // Génère les projets
-  if (id === null || ["0", "1", "2", "3"].includes(id)) {
-    for (let i = 0; i < data.length; i++) {
-      const figure = document.createElement("figure");
-      sectionProjets.appendChild(figure);
-      figure.classList.add(`js-projet-${data[i].id}`); // Ajoute l'id du projet pour le lien vers la modale lors de la supression
-      const img = document.createElement("img");
-      img.src = data[i].imageUrl;
-      img.alt = data[i].title;
-      figure.appendChild(img);
-
-      const figcaption = document.createElement("figcaption");
-      figcaption.innerHTML = data[i].title;
-      figure.appendChild(figcaption);
-    }
-  }
-}
-
-// >>> FILTRES
-for (let filter of listfilter) {
-  filter.addEventListener("click", (e) => {
-    // Tous les projets
-    const id = e.target.dataset.id;
-    generationProjets(data, id);
-    for (let filter of listfilter) {
-      filter.classList.remove("active");
-    }
-    e.target.classList.add("active");
-  });
-}
-
-
-// 1-// GESTION BOITE MODALE //////
-// Reset la section projets
-function resetmodaleSectionProjets() {
-  modaleSectionProjets.innerHTML = "";
-}
-
-// Ouverture de la modale
-let modale = 1;
-let dataAdmin;
-const modaleSectionProjets = document.querySelector(".js-admin-projets");
-
-const openModale = function (e) {
-  e.preventDefault();
-  modale = document.querySelector(e.target.getAttribute("href"));
-
-  modaleProjets(); // Génère les projets dans la modale admin
-  // attendre la fin de la génération des projets
-  setTimeout(() => {
-    modale.style.display = null;
-    modale.removeAttribute("aria-hidden");
-    modale.setAttribute("aria-modal", "true");
-  }, 25);
-  // Ajout EventListener sur les boutons pour ouvrir la modale projet
-  document.querySelectorAll(".js-modale-projet").forEach((a) => {
-    a.addEventListener("click", openModaleProjet);
-  });
-
-  // Apl fermeture modale
-  modale.addEventListener("click", closeModale);
-  modale
-    .querySelector(".js-modale-close")
-    .addEventListener("click", closeModale);
-  modale
-    .querySelector(".js-modale-stop")
-    .addEventListener("click", stopPropagation);
-};
-
 // Génère les projets dans la modale admin
 async function modaleProjets() {
   const response = await fetch("http://localhost:5678/api/works");
@@ -147,7 +27,6 @@ async function modaleProjets() {
   }
   deleteWork();
 }
-
 //  Ferme la modale
 const closeModale = function (e) {
   e.preventDefault();
@@ -168,89 +47,29 @@ const closeModale = function (e) {
   }, 300);
 };
 
+// Retour modale admin
+const backToModale = function (e) {
+  e.preventDefault();
+  modaleProjet.style.display = "none";
+  modaleProjet = null;
+  modaleProjets(dataAdmin);
+};
+
 // Définit la "border" du click pour fermer la modale
 const stopPropagation = function (e) {
   e.stopPropagation();
-};
-// Selectionne les éléments qui ouvrent la modale
-document.querySelectorAll(".js-modale").forEach((a) => {
+  };
+  // Selectionne les éléments qui ouvrent la modale
+  document.querySelectorAll(".js-modale").forEach((a) => {
   a.addEventListener("click", openModale);
-});
-// Ferme la modale avec la touche echap
-window.addEventListener("keydown", function (e) {
+  });
+  // Ferme la modale avec la touche echap
+  window.addEventListener("keydown", function (e) {
   if (e.key === "Escape" || e.key === "Esc") {
     closeModale(e);
     closeModaleProjet(e);
   }
-});
-
-//2-//// GESTION TOKEN LOGIN /////
-
-// Récupération du token
-const token = localStorage.getItem("token");
-
-adminPanel();
-// Gestion de l'affichage des boutons admin
-function adminPanel() {
-  document.querySelectorAll(".admin__modifer").forEach((a) => {
-    if (token === null) {
-      return;
-    } else {
-      a.removeAttribute("aria-hidden");
-      a.removeAttribute("style");
-    }
   });
-}
-
-// 3-// GESTION SUPPRESSION D'UN PROJET //
-
-// Event listener sur les boutons supprimer par apport a leur id
-function deleteWork() {
-  let btnDelete = document.querySelectorAll(".js-delete-work");
-  for (let i = 0; i < btnDelete.length; i++) {
-    btnDelete[i].addEventListener("click", deleteProjets);
-  }
-}
-
-// Supprimer le projet
-async function deleteProjets() {
-  console.log("DEBUG DEBUT DE FUNCTION SUPRESSION");
-  console.log(this.classList[0]);
-  console.log(token);
-
-  await fetch(`http://localhost:5678/api/works/${this.classList[0]}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
-  })
-    .then((response) => {
-      console.log(response);
-      // Token bon
-      if (response.status === 204) {
-        console.log("DEBUG SUPPRESION DU PROJET " + this.classList[0]);
-        refreshPage(this.classList[0]);
-      }
-      // Token incorrect
-      else if (response.status === 401) {
-        alert(
-          "Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte administrateur valide"
-        );
-        window.location.href = "login.html";
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
-// Rafraichit les projets sans recharger la page
-async function refreshPage(i) {
-  modaleProjets(); // Re lance une génération des projets dans la modale admin
-
-  // supprime le projet de la page d'accueil
-  const projet = document.querySelector(`.js-projet-${i}`);
-  projet.style.display = "none";
-}
-// 4-/ GESTION BOITE MODALE AJOUT PROJET ///
 
 // Ouverture modale projet
 let modaleProjet = null;
@@ -296,62 +115,50 @@ const closeModaleProjet = function (e) {
   closeModale(e);
 };
 
-// Retour modale admin
-const backToModale = function (e) {
+const openModale = function (e) {
   e.preventDefault();
-  modaleProjet.style.display = "none";
-  modaleProjet = null;
-  modaleProjets(dataAdmin);
+  modale = document.querySelector(e.target.getAttribute("href"));
+
+  modaleProjets(); // Génère les projets dans la modale admin
+  // attendre la fin de la génération des projets
+  setTimeout(() => {
+    modale.style.display = null;
+    modale.removeAttribute("aria-hidden");
+    modale.setAttribute("aria-modal", "true");
+  }, 25);
+  // Ajout EventListener sur les boutons pour ouvrir la modale projet
+  document.querySelectorAll(".js-modale-projet").forEach((a) => {
+    a.addEventListener("click", openModaleProjet);
+  });
+
+  // Apl fermeture modale
+  modale.addEventListener("click", closeModale);
+  modale
+    .querySelector(".js-modale-close")
+    .addEventListener("click", closeModale);
+  modale
+    .querySelector(".js-modale-stop")
+    .addEventListener("click", stopPropagation);
 };
-//5-/ GESTION AJOUT D'UN PROJET        ///
 
-const btnAjouterProjet = document.querySelector(".js-add-work");
-btnAjouterProjet.addEventListener("click", addWork);
+ // Génère les projets
+  if (id === null || ["0", "1", "2", "3"].includes(id)) {
+    for (let i = 0; i < data.length; i++) {
+      const figure = document.createElement("figure");
+      sectionProjets.appendChild(figure);
+      figure.classList.add(`js-projet-${data[i].id}`); // Ajoute l'id du projet pour le lien vers la modale lors de la supression
+      const img = document.createElement("img");
+      img.src = data[i].imageUrl;
+      img.alt = data[i].title;
+      figure.appendChild(img);
 
-// Ajouter un projet
-async function addWork(event) {
-  event.preventDefault();
-
-  const title = document.querySelector(".js-title").value;
-  const categoryId = document.querySelector(".js-categoryId").value;
-  const image = document.querySelector(".js-image").files[0];
-
-  if (title === "" || categoryId === "" || image === undefined) {
-    alert("Merci de remplir tous les champs");
-    return;
-  } else if (categoryId !== "1" && categoryId !== "2" && categoryId !== "3") {
-    alert("Merci de choisir une catégorie valide");
-    return;
-  } else {
-    try {
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("category", categoryId);
-      formData.append("image", image);
-
-      const response = await fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      if (response.status === 201) {
-        alert("Projet ajouté avec succès :)");
-        modaleProjets(dataAdmin);
-        backToModale(event);
-        generationProjets(data, null);
-      } else if (response.status === 400) {
-        alert("Merci de remplir tous les champs");
-      } else if (response.status === 500) {
-        alert("Erreur serveur");
-      } else if (response.status === 401) {
-        alert("Vous n'êtes pas autorisé à ajouter un projet");
-        window.location.href = "login.html";
-      }
-    } catch (error) {
-      console.log(error);
+      const figcaption = document.createElement("figcaption");
+      figcaption.innerHTML = data[i].title;
+      figure.appendChild(figcaption);
     }
   }
-}
+// supprime le projet de la page d'accueil
+const projet = document.querySelector(`.js-projet-${i}`);
+projet.style.display = "none";
+
+export { resetmodaleSectionProjets, openModale, closeModale, openModaleProjet};
