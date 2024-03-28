@@ -3,10 +3,10 @@
 
 
 window.onload = function(){
-    generationProjets (data, 1);
+    generationProjets ();
     adminPanel();
     deleteWork();
-    btnAjouterProjet.addEventListener("click, addWork");
+   
 
 
 applyFilters (listfilter, data, generationProjets);

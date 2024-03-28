@@ -2,7 +2,6 @@
 async function modaleProjets() {
   const response = await fetch("http://localhost:5678/api/works");
   dataAdmin = await response.json();
-  resetmodaleSectionProjets();
     for (let i = 0; i < dataAdmin.length; i++) {
       const modaleSectionProjets = document.getElementById ('modale_section_projets')
     const div = document.createElement("div");

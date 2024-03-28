@@ -6,7 +6,7 @@ function resetSectionProjets() {
   }
 
   // Génère les projets
-async function generationProjets() {
+async function generationProjets(data, id ) {
     try {
       const response = await fetch("http://localhost:5678/api/works");
       data = await response.json();
