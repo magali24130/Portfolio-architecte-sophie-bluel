@@ -9,24 +9,39 @@ function filterProjects(data, id) {
 
 // Appliquer les filtres lors du clic sur un bouton filtre
 function applyFilters(listfilter, data, generationProjets) {
-  for (let filter of listfilter) {
-    filter.addEventListener("click", (e) => {
-      // Tous les projets
-      const id = e.target.dataset.id;
-      const filteredData = filterProjects(data, id);
-      // Vérifier si les données sont définies avant de générer les projets
-      if (filteredData !== undefined) {
-        generationProjets(filteredData, id);
-      } else {
-        // Si les données ne sont pas définies, vous pouvez afficher un message d'erreur ou effectuer une autre action
-        console.log("Aucun projet à afficher actuellement");
-      }
-      // Supprimer la classe "active" de tous les filtres
-      for (let filter of listfilter) {
-        filter.classList.remove("active");
-      }
-      // Ajouter la classe "active" au filtre sélectionné
-      e.target.classList.add("active");
-    });
+  // Vérifier si data est vide ou non défini
+  if (!data || data.length === 0) {
+    // Désactiver les boutons de filtre
+    for (let filter of listfilter) {
+      filter.classList.add("disabled");
+      filter.removeEventListener("click", filterClickHandler); // Supprimer le gestionnaire d'événements click
+    }
+    const p = document.createElement("p");
+    p.classList.add("error");
+    p.innerHTML = "Aucun projet à afficher actuellement ";
+    sectionProjets.appendChild(p);
+    return;
   }
+
+  // Activer les boutons de filtre
+  for (let filter of listfilter) {
+    filter.classList.remove("disabled");
+    filter.addEventListener("click", filterClickHandler); // Ajouter le gestionnaire d'événements click
+  }
+}
+
+// Gestionnaire d'événements click pour les boutons de filtre
+function filterClickHandler(e) {
+  const id = e.target.dataset.id;
+  const filteredData = filterProjects(data, id);
+  // Appeler la fonction generationProjets avec les données filtrées
+  generationProjets(filteredData, id);
+}
+
+// Change la couleur du bouton en fonction du filtre
+if (data.length === 0 || data === undefined) {
+  const p = document.createElement("p");
+  p.classList.add("error");
+  p.innerHTML = "Aucun projet à afficher actuellement ";
+  sectionProjets.appendChild(p);
 }

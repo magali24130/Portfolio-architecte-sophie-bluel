@@ -43,7 +43,6 @@ const closeModale = function (e) {
   window.setTimeout(function () {
     modale.style.display = "none";
     modale = null;
-    resetmodaleSectionProjets();
   }, 300);
 };
 
