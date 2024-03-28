@@ -6,7 +6,7 @@ function resetSectionProjets() {
   }
 
   // Génère les projets
-async function generationProjets(data, id) {
+async function generationProjets() {
     try {
       const response = await fetch("http://localhost:5678/api/works");
       data = await response.json();
@@ -25,7 +25,8 @@ async function generationProjets(data, id) {
 
 // Génère les projets
 if (id === null || ["0", "1", "2", "3"].includes(id)) {
-  for (let i = 0; i < data.length; i++) {
+  sectionProjets.innerHTML = "";
+  for (let i = 0; i < data.length; i++) {   
     const figure = document.createElement("figure");
     sectionProjets.appendChild(figure);
     figure.classList.add(`js-projet-${data[i].id}`); // Ajoute l'id du projet pour le lien vers la modale lors de la supression
