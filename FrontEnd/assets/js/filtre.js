@@ -31,7 +31,8 @@ function applyFilters(listfilter, data, generationProjets) {
 }
 
 // Gestionnaire d'événements click pour les boutons de filtre
-function filterClickHandler(e) {
+async function filterClickHandler(e) {
+  let data = await callWorks ()
   const id = e.target.dataset.id;
   const filteredData = filterProjects(data, id);
   // Appeler la fonction generationProjets avec les données filtrées

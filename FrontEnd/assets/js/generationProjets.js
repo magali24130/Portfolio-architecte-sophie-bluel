@@ -8,9 +8,8 @@ function resetSectionProjets() {
   // Génère les projets
 async function generationProjets(data, id ) {
     try {
-      const response = await fetch("http://localhost:5678/api/works");
-      data = await response.json();
-      afficherprojets (data,"0");
+     
+      afficherprojets (data, id );
     } catch {
       const p = document.createElement("p");
       p.classList.add("error");
